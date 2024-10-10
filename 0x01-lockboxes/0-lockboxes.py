@@ -1,16 +1,29 @@
-#!/usr/bin/env python3
-"""Write a type-annotated function to_kv that takes
-string k and an int OR float v as arguments and returns a tuple.
-The first element of the tuple is the string k.
-The second element is the square of the
-int/float v and should be annotated as a float.
-"""
+#!/usr/bin/python3
+"""Module to determine if all lockboxes can be opened."""
+
+from typing import List
 
 
-from typing import Union, Tuple
+def canUnlockAll(boxes: List[List[int]]) -> bool:
+    """Determines if all boxes can be opened.
 
+    Args:
+        boxes (List[List[int]]): A list of lists
+        where each sublist contains keys to other boxes.
 
-def to_kv(k: str, v: Union[int, float]) -> Tuple[str, float]:
-    """comment
+    Returns:
+        bool: True if all boxes can be opened, otherwise False.
     """
-    return (k, float(v**2))
+    n = len(boxes)
+    opened = [False] * n  # Tracks which boxes are opened
+    opened[0] = True  # The first box is initially unlocked
+    keys = [0]  # Start with keys from the first box
+
+    while keys:
+        current_key = keys.pop()  # Get a key
+        for key in boxes[current_key]:
+            if key < n and not opened[key]:
+                opened[key] = True
+                keys.append(key)
+
+    return all(opened)
