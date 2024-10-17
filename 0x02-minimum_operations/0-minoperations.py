@@ -1,20 +1,28 @@
 #!/usr/bin/python3
+
+""" 0-minoperations.py
+Module that defines a method that calculates the fewest number of operations
+to result in exactly n H characters in the file.
+"""
+
+
 def minOperations(n):
+    """ Calculates the fewest number of operations needed
+        to result in exactly n H characters in the file.
+    Args:
+        n (int): Number of H characters to reach.
+    Returns:
+        (int): The fewest number of operations
+    """
     if n <= 1:
         return 0
-    
-    operations = 0
-    divisor = 2
-    
-    # Loop to factorize n by trying divisors starting from 2
-    while n > 1:
-        # While the current divisor divides n
-        while n % divisor == 0:
-            # Add the divisor to operations
-            operations += divisor
-            # Reduce n by dividing it by the current divisor
-            n //= divisor
-        # Move to the next divisor
-        divisor += 1
-    
-    return operations
+    else:
+        i = 2
+        operations = 0
+        while i <= n:
+            if n % i == 0:
+                operations += i
+                n = n / i
+            else:
+                i += 1
+        return operations
